@@ -1,7 +1,11 @@
-import Image from "next/image";
+import TransactionCard from "./components/TransactionCard";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col justify-between p-12"></main>
+    <main className="min-h-screen justify-between px-12">
+      <TransactionCard />
+      <TransactionCard />
+      <TransactionCard />
+    </main>
   );
 }
