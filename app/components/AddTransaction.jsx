@@ -68,6 +68,12 @@ function AddTransaction() {
     }
 
     router.refresh();
+    setFormData({
+      description: "",
+      amount: "",
+      category: "",
+      color: "",
+    });
   };
   return (
     <section>
