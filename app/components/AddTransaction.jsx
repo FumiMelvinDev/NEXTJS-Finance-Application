@@ -9,14 +9,17 @@ const category = [
   {
     id: 1,
     name: "Income",
+    transactionColor: "#57A773",
   },
   {
     id: 2,
     name: "Expense",
+    transactionColor: "#EE6352",
   },
   {
     id: 3,
     name: "Savings/Investment",
+    transactionColor: "#FFD3BA",
   },
 ];
 
@@ -26,28 +29,50 @@ function classNames(...classes) {
 
 function AddTransaction() {
   const [formData, setFormData] = useState({
-    desciption: "",
+    description: "",
     amount: "",
     category: "",
     color: "",
   });
   const [selected, setSelected] = useState(category[1]);
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const router = useRouter();
+
+  const { description, amount, color } = formData;
+
+  const handleChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = {
+      description: description,
+      amount: amount,
+      category: selected.name,
+      color: selected.transactionColor,
+    };
+    const res = await fetch("/api/Transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ formData }),
+    });
+
+    if (!res.ok) {
+      throw new Error("failed to add transaction");
+    }
+
+    router.refresh();
   };
   return (
     <section>
       <form onSubmit={handleSubmit} method="post">
         <div className="relative space-y-3 rounded-md shadow-sm">
-          <input
-            type="text"
-            name="description"
-            id="description"
-            className="block w-full rounded-md border-0 py-1.5 text-gray-700 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            placeholder="Transaction name"
-          />
-
           <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
               <>
@@ -124,8 +149,20 @@ function AddTransaction() {
 
           <input
             type="text"
+            name="description"
+            id="description"
+            value={description}
+            onChange={handleChange}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-700 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            placeholder="Transaction name"
+          />
+
+          <input
+            type="text"
             name="amount"
             id="amount"
+            value={amount}
+            onChange={handleChange}
             className="block w-full rounded-md border-0 py-1.5 text-gray-700 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             placeholder="Transaction amount"
           />
