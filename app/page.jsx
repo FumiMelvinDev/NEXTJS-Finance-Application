@@ -17,8 +17,8 @@ export default async function Home() {
   const { transactions } = await getTransactions();
 
   return (
-    <main className="min-h-screen justify-between px-10 sm:px-52 mx-auto">
-      <div className="grid md:grid-cols-2 gap-6">
+    <main className="min-h-screen justify-between px-10 md:px-52 mx-auto">
+      <div className="grid lg:grid-cols-2 gap-6">
         <div className="">
           <AddTransaction />
           <div className="space-y-3 py-4">
