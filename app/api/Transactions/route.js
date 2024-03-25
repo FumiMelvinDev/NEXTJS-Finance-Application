@@ -1,8 +1,10 @@
+import { connectToDB } from "@/lib/mongoDB/connect";
 import Transaction from "@/lib/mongoDB/models/transaction";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
+    await connectToDB();
     const body = await req.json();
 
     const transactionData = body.formData;
@@ -17,6 +19,7 @@ export async function POST(req) {
 
 export async function GET() {
   try {
+    await connectToDB();
     const transactions = await Transaction.find();
 
     return NextResponse.json({ transactions }, { status: 200 });
