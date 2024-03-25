@@ -24,7 +24,7 @@ export default async function Home() {
           <div className="space-y-3 py-4">
             {transactions.length > 0 ? (
               <>
-                {transactions.map((transaction) => (
+                {transactions?.map((transaction) => (
                   <TransactionCard
                     key={transaction._id}
                     transaction={transaction}
