@@ -22,12 +22,18 @@ export default async function Home() {
         <div className="">
           <AddTransaction />
           <div className="space-y-3 py-4">
-            {transactions.map((transaction) => (
-              <TransactionCard
-                key={transaction._id}
-                transaction={transaction}
-              />
-            ))}
+            {transactions.length > 0 ? (
+              <>
+                {transactions.map((transaction) => (
+                  <TransactionCard
+                    key={transaction._id}
+                    transaction={transaction}
+                  />
+                ))}
+              </>
+            ) : (
+              <h2>No recent transactions</h2>
+            )}
           </div>
         </div>
         <div className="">stats</div>
