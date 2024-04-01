@@ -3,7 +3,7 @@ import TransactionCard from "./components/TransactionCard";
 
 const getTransactions = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/Transactions", {
+    const res = await fetch(process.env.API_URL + "/api/Transactions", {
       cache: "no-store",
     });
 
